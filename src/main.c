@@ -6,7 +6,7 @@
 /*   By: jadyar <jadyar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 11:23:48 by jadyar            #+#    #+#             */
-/*   Updated: 2024/08/12 13:51:36 by jadyar           ###   ########.fr       */
+/*   Updated: 2024/08/12 15:05:02 by jadyar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int	main(int ac, char **av)
 		err_msg("Error: Malloc failed\n");
 	if (start_sim(philo, &data))
 		err_msg("Error: Sim not successful\n");
+	if (init_rest(&data))
+		err_msg("Error: Rest not successful\n");
 	cleanup(&data);
 	free(philo);
 	return (0);

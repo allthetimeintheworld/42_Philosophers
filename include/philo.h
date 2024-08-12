@@ -6,7 +6,7 @@
 /*   By: jadyar <jadyar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 10:10:14 by jadyar            #+#    #+#             */
-/*   Updated: 2024/08/12 13:36:25 by jadyar           ###   ########.fr       */
+/*   Updated: 2024/08/12 15:09:16 by jadyar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,9 @@ long long				get_time(void);
 void					*monitor_routine(void *arg);
 void					print_status(t_philo *philo, char *status);
 void					cleanup(t_data *data);
-void					start_simulation(t_data *data);
+void					start_mon(t_data *data);
 int						start_sim(t_philo *philo, t_data *data);
 int						init_data(t_data *data, int ac, char **av);
 int						init_philos(t_philo *philo, t_data *data);
+int						init_rest(t_data *data);
 #endif
