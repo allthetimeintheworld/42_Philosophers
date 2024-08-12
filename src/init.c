@@ -6,7 +6,7 @@
 /*   By: jadyar <jadyar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:17:49 by jadyar            #+#    #+#             */
-/*   Updated: 2024/08/12 14:52:48 by jadyar           ###   ########.fr       */
+/*   Updated: 2024/08/12 15:12:02 by jadyar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,6 @@ int	init_data(t_data *data, int ac, char **av)
 	{
 		free(data->forks);
 		return (1);
-	}
-	i = 0;
-	while (i < data->philo_count)
-	{
-		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
-		{
-			j = 0;
-			while (j < i)
-				pthread_mutex_destroy(&data->forks[j++]);
-			pthread_mutex_destroy(&data->death_lock);
-			pthread_mutex_destroy(&data->full);
-			free(data->forks);
-			return (1);
-		}
-		i++;
 	}
 	return (0);
 }
@@ -104,3 +89,30 @@ int	start_sim(t_philo *philo, t_data *data)
 	return (0);
 }
 
+int	init_rest(t_data *data)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	if (pthread_mutex_init(&data->death_lock, NULL) != 0
+		|| pthread_mutex_init(&data->full, NULL) != 0)
+		return (1);
+	else
+		i = 0;
+	while (i < data->philo_count)
+	{
+		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
+		{
+			j = 0;
+			while (j < i)
+				pthread_mutex_destroy(&data->forks[j++]);
+			pthread_mutex_destroy(&data->death_lock);
+			pthread_mutex_destroy(&data->full);
+			free(data->forks);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
