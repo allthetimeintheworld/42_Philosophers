@@ -6,7 +6,7 @@
 #    By: jadyar <jadyar@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/08 12:21:25 by jadyar            #+#    #+#              #
-#    Updated: 2024/08/09 11:58:03 by jadyar           ###   ########.fr        #
+#    Updated: 2024/08/12 14:51:55 by jadyar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wall -Wextra -Werror -fsanitize=thread -g -Iinclude
 LDFLAGS = -lpthread
 
 # Source files
-SRCS = src/main.c src/init.c src/utils.c src/monitor.c
+SRCS = src/main.c src/init.c src/utils.c src/monitor.c src/clean.c
 # Header files
 HEADERS = include/philo.h
 # Object files

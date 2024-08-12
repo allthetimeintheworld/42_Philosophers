@@ -6,7 +6,7 @@
 /*   By: jadyar <jadyar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 11:23:48 by jadyar            #+#    #+#             */
-/*   Updated: 2024/08/09 12:57:59 by jadyar           ###   ########.fr       */
+/*   Updated: 2024/08/12 13:51:36 by jadyar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,24 @@ void	print_status(t_philo *philo, char *status)
 {
 	t_data	*data;
 
+	if (philo == NULL)
+	{
+		fprintf(stderr, "Error: philo is NULL\n");
+		return ;
+	}
 	data = philo->data;
+	if (data == NULL)
+	{
+		fprintf(stderr, "Error: data is NULL\n");
+		return ;
+	}
 	pthread_mutex_lock(&data->write_lock);
 	if (!data->she_died)
-		printf("%lld %d %s\n", get_time() - data->start_time, \
-			philo->id + 1, status);
+	{
+		printf("Debug: About to print status\n");
+		printf("%lld %d %s\n", get_time() - data->start_time, philo->id + 1,
+			status);
+	}
 	pthread_mutex_unlock(&data->write_lock);
 }
 
@@ -29,7 +42,7 @@ int	main(int ac, char **av)
 	t_data	data;
 	t_philo	*philo;
 
-	//data = (t_data){0};
+	data = (t_data){0};
 	if (ac < 5 || ac > 6)
 		err_msg("Invalid arguments");
 	if (init_data(&data, ac, av))

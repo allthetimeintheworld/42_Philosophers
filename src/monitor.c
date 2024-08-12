@@ -6,7 +6,7 @@
 /*   By: jadyar <jadyar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:13:02 by jadyar            #+#    #+#             */
-/*   Updated: 2024/08/09 13:00:40 by jadyar           ###   ########.fr       */
+/*   Updated: 2024/08/12 13:24:22 by jadyar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	*monitor_routine(void *arg)
 			pthread_mutex_unlock(&data->death_lock);
 			i++;
 		}
-		//i = 0;
 		ft_usleep(1000);
 	}
 	return (NULL);

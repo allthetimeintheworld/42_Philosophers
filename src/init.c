@@ -6,7 +6,7 @@
 /*   By: jadyar <jadyar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:17:49 by jadyar            #+#    #+#             */
-/*   Updated: 2024/08/09 13:01:36 by jadyar           ###   ########.fr       */
+/*   Updated: 2024/08/12 14:52:48 by jadyar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 int	init_data(t_data *data, int ac, char **av)
 {
-	int	i;
-	int	j;
-
+	if (!data || !av)
+		return (1);
 	data->philo_count = ft_atoi(av[1]);
 	data->time_to_die = ft_atoi(av[2]);
 	data->time_to_eat = ft_atoi(av[3]);
@@ -57,6 +56,26 @@ int	init_data(t_data *data, int ac, char **av)
 	return (0);
 }
 
+int	init_philos(t_philo *philo, t_data *data)
+{
+	int	i;
+
+	i = 0;
+	philo = malloc(sizeof(t_philo) * data->philo_count);
+	if (!philo)
+		err_msg("Error: Malloc failed\n");
+	while (i < data->philo_count)
+	{
+		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
+		{
+			err_msg("Error: Mutex init failed\n");
+		}
+		i++;
+	}
+	pthread_mutex_init(&data->write_lock, NULL);
+	return (0);
+}
+
 int	start_sim(t_philo *philo, t_data *data)
 {
 	int	i;
@@ -85,30 +104,3 @@ int	start_sim(t_philo *philo, t_data *data)
 	return (0);
 }
 
-int	init_philos(t_philo *philo, t_data *data)
-{
-	int	i;
-
-	(void)philo;
-	i = 0;
-	while (i < data->philo_count)
-	{
-		pthread_mutex_init(&data->forks[i], NULL);
-		i++;
-	}
-	pthread_mutex_init(&data->write_lock, NULL);
-	return (0);
-}
-
-void	cleanup(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->philo_count)
-		pthread_mutex_destroy(&data->forks[i++]);
-	pthread_mutex_destroy(&data->write_lock);
-	pthread_mutex_destroy(&data->death_lock);
-	free(data->philos);
-	free(data->forks);
-}

@@ -6,7 +6,7 @@
 /*   By: jadyar <jadyar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 11:22:35 by jadyar            #+#    #+#             */
-/*   Updated: 2024/08/09 12:49:57 by jadyar           ###   ########.fr       */
+/*   Updated: 2024/08/12 14:51:17 by jadyar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,11 @@ long long	get_time(void)
 	struct timeval	tv;
 	long long		time;
 
-	gettimeofday(&tv, NULL);
+	if (gettimeofday(&tv, NULL) != 0)
+	{
+		err_msg("Error: gettimeofday failed\n");
+		return (-1);
+	}
 	time = (tv.tv_sec * 1000LL) + (tv.tv_usec / 1000);
 	return (time);
 }
@@ -51,11 +55,19 @@ long long	get_time(void)
 int	ft_usleep(long time)
 {
 	long	start;
+	long	current;
 
 	start = get_time();
-	while (get_time() - start < time)
+	if (start == -1)
+		return (-1);
+	while (1)
 	{
-		ft_usleep(100);
+		current = get_time();
+		if (current == -1)
+			return (-1);
+		if (current - start >= time)
+			break ;
+		usleep(100);
 	}
 	return (0);
 }
@@ -63,18 +75,7 @@ int	ft_usleep(long time)
 int	err_msg(char *err_msg)
 {
 	printf("Error: %s\n", err_msg);
-	return (1);
+	exit (1);
 }
 
-/* int	check_input(int argc, char **argv)
-{
-	if (argc < 5)
-		return (WRONG_INPUT);
-	if (argc > 6)
-		return (WRONG_INPUT);
-	if (is_input_digit(argc, argv) != 0)
-		return (WRONG_INPUT);
-	if (wrong_input_check(argc, argv))
-		return (WRONG_INPUT);
-	return (0);
-} */
+
