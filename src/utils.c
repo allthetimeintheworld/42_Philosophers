@@ -1,42 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_args.c                                       :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jadyar <jadyar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/13 19:39:34 by jadyar            #+#    #+#             */
-/*   Updated: 2024/08/13 19:39:56 by jadyar           ###   ########.fr       */
+/*   Created: 2024/08/16 12:04:59 by jadyar            #+#    #+#             */
+/*   Updated: 2024/08/16 17:57:09 by jadyar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static int	ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
+	int	i;
 	int	result;
 
 	result = 0;
-	while (*str >= '0' && *str <= '9')
+	i = 0;
+	while (ft_is_digit(str[i]))
 	{
-		result = result * 10 + (*str - '0');
-		str++;
+		result = result * 10 + (str[i] - 48);
+		i++;
 	}
 	return (result);
 }
 
-int	parse_args(int argc, char **argv, t_data *data)
+int	ft_is_digit(int c)
 {
-	if (argc < 5 || argc > 6)
+	if (c >= '0' && c <= '9')
 		return (1);
-	data->num_philosophers = ft_atoi(argv[1]);
-	data->time_to_die = ft_atoi(argv[2]);
-	data->time_to_eat = ft_atoi(argv[3]);
-	data->time_to_sleep = ft_atoi(argv[4]);
-	if (argc == 6)
-		data->meals_required = ft_atoi(argv[5]);
-	else
-		data->meals_required = -1;
-	data->start_time = get_timestamp();
+	return (0);
+}
+
+long long	get_timestamp(void)
+{
+	struct timeval	time;
+
+	gettimeofday(&time, NULL);
+	return (((long long)time.tv_sec * 1000) + time.tv_usec / 1000);
+}
+
+int	ft_usleep(size_t miliseconds)
+{
+	size_t	start;
+
+	start = get_timestamp();
+	while (get_timestamp() - start < miliseconds)
+		usleep(1000);
 	return (0);
 }

@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: jadyar <jadyar@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/08/13 19:30:53 by jadyar            #+#    #+#              #
-#    Updated: 2024/08/14 14:55:07 by jadyar           ###   ########.fr        #
+#    Created: 2024/08/15 10:11:50 by jadyar            #+#    #+#              #
+#    Updated: 2024/08/16 17:04:45 by jadyar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,9 @@ CFLAGS = -Wall -Wextra -Werror -g -Iinclude #-fsanitize=thread
 LDFLAGS = -lpthread
 
 # Source files
-SRCS = main.c init.c philo_routine.c utils.c parse_args.c monitor.c
+SRCS = src/main.c src/init.c src/thread_routine.c src/utils.c src/parse_arg.c src/monitor.c src/error_handle.c src/simulate.c
 # Header files
-HEADERS = philosopher.h
+HEADERS = include/philosopher.h
 # Object files
 OBJS = $(SRCS:.c=.o)
 # Executable name
